@@ -1,0 +1,11 @@
+{
+  "name": "mpc",
+  "version": "1.0.0",
+  "description": "My personal Library imiting from JSDOM_ADS",
+  "main": "mpc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Flyrk",
+  "license": "ISC"
+}
