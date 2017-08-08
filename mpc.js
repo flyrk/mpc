@@ -136,4 +136,11 @@
   }
   window['MPC']['prependChild'] = prependChild;
 
+  function bindFunction(obj, func) {    // 修改func的作用域为obj
+    return function() {
+      func.apply(obj, arguments);
+    };
+  }
+  window['MPC']['bindFunction'] = bindFunction;
+
 })();
