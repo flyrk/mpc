@@ -143,4 +143,21 @@
   }
   window['MPC']['bindFunction'] = bindFunction;
 
+  function getBrowserWindowSize() {   // 获取浏览器窗口大小
+    var de = document.documentElement;
+    return {
+      'width': (
+        window.innerWidth
+        || (de && de.clientWidth)
+        || document.body.clientWidth
+      ),
+      'height': (
+        window.innerHeight
+        || (de && de.clientHeight)
+        || document.body.clientHeight
+      )
+    };
+  }
+  window['MPC']['getBrowserWindowSize'] = getBrowserWindowSize;
+
 })();
