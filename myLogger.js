@@ -16,8 +16,8 @@ function myLogger(id) {
     logWindow.style.top = top + 'px';
     logWindow.style.left = left + 'px';
     // 设置固定大小，允许窗口内容滚动
-    logWindow.style.width = '200px';
-    logWindow.style.height = '200px';
+    logWindow.style.width = '500px';
+    logWindow.style.height = '500px';
     logWindow.style.overflow = 'scroll';
     // 添加样式
     logWindow.style.padding = '0';
@@ -75,7 +75,7 @@ myLogger.prototype = {
     return this.writeRaw(message);
   },
   header: function (message) {  // 向日志中写入一个标题
-    message = '<span style="color: white; background-color: #15e1ee; font-weight: bold; padding: 0px 5px;">'
+    message = '<span style="color: white; background-color: #434447; font-weight: bold; padding: 0px 5px;">'
       + message + '</span>';
     return this.writeRaw(message);
   }

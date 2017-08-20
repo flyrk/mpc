@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Generate DOM</title>
+    <link rel="stylesheet" href="../main.css">
+
+    <script src="../mpc.js"></script>
+    <script src="generateDom.js"></script>
+    <script src="load.js"></script>
+  </head>
+  <body>
+    <h1>DOM Generation</h1>
+    <div id="content">
+      <form action="" id="generator">
+        <fieldset>
+          <h2>Source</h2>
+          <label for="source">Enter an HTML document fragment</label>
+          <textarea id="source" cols="30" rows="15"></textarea>
+          <button id="generate">&#8595; generate &#8595;</button>
+          <h2>DOM Code</h2>
+          <label for="result">DOM goodness:</label>
+          <textarea name="result" id="result" cols="30" rows="15"></textarea>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

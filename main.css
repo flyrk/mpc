@@ -1,0 +1,13 @@
+#content {
+  width: 80%;
+}
+#content > form > fieldset {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+#content > form > fieldset > textarea {
+  width: 80%;
+  margin-top: 20px;
+}
