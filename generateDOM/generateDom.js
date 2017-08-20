@@ -44,7 +44,78 @@
     return domCode;
   }
 
-  function processAttribute(tabCount, refParent) {}
+  function processAttribute(tabCount, refParent) {
+    // 跳过文本节点
+    if (this.nodeType !== MPC.node.ATTRIBUTE_NODE) return;
+    // 取得属性值
+    var attrValue = (this.nodeValue ? encode(this.nodeValue.trim()) : '');
+    if (this.nodeName === 'cssText') alert('true');
+    // 如果没有值则直接返回
+    if (!attrValue) return;
+    // 确定缩进
+    var tabs = (tabCount ? '\t'.repeat(parseInt(tabCount)) : '');
+    // 根据nodeName判断，除了class和style需要特殊处理，其他按常规处理
+    switch(this.nodeName) {
+      case 'class': // 使用className为class赋值
+        domCode += tabs
+          + refParent
+          + '.className = '
+          + checkForVariable(attrValue)
+          + ';\n';
+        break;
+      case 'style': // 使用正则表达式分割样式属性值
+        var style = attrValue.split(/\s*;\s*/);
+        if (style) {
+          for (var pair in style) {
+            if (!style[pair]) continue;
+            // 分割每对样式属性
+            var prop = style[pair].split(/\s*:\s*/);
+            if (!prop[1]) continue;
+            // 将css-property格式的css属性转换为cssProperty格式
+            prop[0] = MPC.camelize(prop[0]);
+            var propValue = checkForVariable(prop[1]);
+            if (prop[0] === 'float') {
+              // float是JS保留字
+              // cssFloat是标准属性
+              // styleFloat是IE使用的属性
+              domCode += tabs
+                + refParent
+                + '.style.cssFloat = '
+                + propValue + ';\n';
+              domCode += tabs
+                + refParent
+                + '.style.styleFloat = '
+                + propValue + ';\n';
+            } else {
+              domCode += tabs
+                + refParent
+                + '.style.'
+                + prop[0]
+                + ' = '
+                + propValue + ';\n';
+            }
+          }
+        }
+        break;
+      default:
+        if (this.nodeName.substring(0, 2) === 'on') { // 如果是事件属性
+          domCode += tabs
+            + refParent
+            + '.'
+            + this.nodeName
+            + ' = function() {' + attrValue + '};\n';
+        } else {  // 其他情况直接用setAttribute
+          domCode += tabs
+            + refParent
+            + '.setAttribute(\''
+            + this.nodeName
+            + '\', '
+            + checkForVariable(attrValue)
+            + ');\n';
+        }
+        break;
+    }
+  }
 
   function processNode(tabCount, refParent) {
     // 根据树的深度级别重复制表符
