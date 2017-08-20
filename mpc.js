@@ -25,7 +25,7 @@
       var element = arguments[i];
       // 如果该参数是一个字符串就假设它是一个id
       if (typeof element === 'string') {
-        element = document.geElementById(element);
+        element = document.getElementById(element);
       }
       // 如果只有一个参数，
       // 则立即返回这个元素
