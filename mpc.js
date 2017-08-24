@@ -181,6 +181,16 @@
   }
   window['MPC']['getBrowserWindowSize'] = getBrowserWindowSize;
 
+  function stopPropagation(eventObj) {
+    eventObject = eventObj || getEventObject(eventObject);
+    if (eventObject.stopPropagation) {
+      eventObject.stopPropagation();
+    } else {
+      eventObject.cancelBubble = true;
+    }
+  }
+  window['MPC']['stopPropagation'] = stopPropagation;
+
   function walkElementsLinear(func, node) {
     var root = node || window.document;
     var nodes = root.getElementsByTagName('*');
