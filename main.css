@@ -8,7 +8,7 @@
   width: 500px;
   height: 500px;
   border-radius: 5px;
-  border: 1px solid #112233;
+  border: 1px solid #162738;
 }
 #content > form > fieldset {
   display: flex;
@@ -19,4 +19,29 @@
 #content > form > fieldset > textarea {
   width: 80%;
   margin-top: 20px;
+}
+#content > form {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+}
+#content form label {
+  display: block;
+  margin: 10px 0;
+}
+#postalCode {
+  color: #ffffff;
+}
+.inputMissing {
+  background-color: rgb(202, 207, 202);
+}
+.inputEditing {
+  background-color: rgb(54.5%, 57%, 54.5%);
+}
+.inputInvalid {
+  background-color: rgb(220, 18, 55);
+}
+.inputComplete {
+  background-color: rgb(67, 232, 29);
 }
