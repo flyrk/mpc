@@ -191,6 +191,16 @@
   }
   window['MPC']['stopPropagation'] = stopPropagation;
 
+  function preventDefault(eventObj) {
+    eventObject = eventObj || getEventObject(eventObject);
+    if (eventObject.preventDefault) {
+      eventObject.preventDefault();
+    } else {
+      eventObject.returnValue = false;
+    }
+  }
+  window['MPC']['preventDefault'] = preventDefault;
+
   function walkElementsLinear(func, node) {
     var root = node || window.document;
     var nodes = root.getElementsByTagName('*');
