@@ -80,6 +80,57 @@
   }
   window['MPC']['removeEvent'] = removeEvent;
 
+  function addLoadEvent(loadEvent, waitForImages) {
+    if (!isCompatible()) { return false; }
+    // waitForImages标记是否要等待嵌入的图片全部载入完成
+    // 如果为true则用常规方法添加事件
+    if (waitForImages) {
+      return addEvent(window, 'load', loadEvent);
+    }
+    // 否则包装loadEvent方法，为this关键字指定正确的内容
+    // 确保事件不会被执行两次
+    var init = function () {
+      // 函数已经被调用过了则直接返回
+      if (arguments.callee.done) return;
+      // 标记是否运行过该函数
+      arguments.callee.done = true;
+      // 在document环境中运行loadEvent
+      loadEvent.apply(document, arguments);
+    };
+    // 为DOMContentLoaded事件注册监听器
+    if (document.addEventListener) {
+      document.addEventListener('DOMContentLoaded', init, false);
+    }
+    // 对于Safari使用setInterval检测document是否载入完成
+    if (/WebKit/i.test(navigator.userAgent)) {
+      var _timer = setInterval(funciton() {
+        if (/loaded|complete/.test(document.readyState)) {
+          clearInterval(_timer);
+          init();
+        }
+      }, 10);
+    }
+    // 对于IE附加一个在载入过程最后执行的脚本
+    // 并检测该脚本是否载入完成
+    /*@cc_on @*/
+    /*@if (@_win32)
+    document.write("<script id=__ie_onload defer src=javascript:void(0)><\/script>");
+    var script = document.getElementById("__ie_onload");
+    script.onreadystatechange = funciton() {
+      if (this.readystate == "complete") {
+        init();
+      }
+    };
+    /*@end @*/
+    return true;
+  }
+  window['MPC']['addLoadEvent'] = addLoadEvent;
+
+  function getEventObject(W3CEvent) {
+    return W3CEvent || window.event;
+  }
+  window['MPC']['getEventObject'] = getEventObject;
+
   function getElementsByClassName(className, tag, parent) {
     parent = parent || document;
     if (!(parent = $(parent))) {
