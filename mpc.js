@@ -144,6 +144,70 @@
   }
   window['MPC']['getTarget'] = getTarget;
 
+  function getMouseButton(eventObject) {
+    eventObject = eventObject || getEventObject(eventObject);
+    // 初始化buttons对象变量
+    var buttons = {
+      'left': false,
+      'middle': false,
+      'right': false
+    };
+    // 检查eventObject对象的toString方法的值
+    // W3C DOM对象有toString方法且返回值是MouseEvent
+    if (eventObject.toString && ~eventObject.toString().indexOf('MouseEvent')) {
+      // W3C方法
+      switch(eventObject.button) {
+        case 0: 
+          buttons.left = true;
+          break;
+        case 1:
+          buttons.middle = true;
+          break;
+        case 2:
+          buttons.right = true;
+          break;
+        default: 
+          break;
+      }
+    } else if (eventObject.button) {
+      // IE方法
+      switch(eventObject.button) {
+        case 1:
+          buttons.left = true;
+          break;
+        case 2:
+          buttons.right = true;
+          break;
+        case 3:
+          buttons.left = true;
+          buttons.right = true;
+          break;
+        case 4:
+          buttons.middle = true;
+          break;
+        case 5:
+          buttons.left = true;
+          buttons.middle = true;
+          break;
+        case 6:
+          buttons.middle = true;
+          buttons.right = true;
+          break;
+        case 7:
+          buttons.left = true;
+          buttons.middle = true;
+          buttons.right = true;
+          break;
+        default:
+          break;
+      }
+    } else {
+      return false;
+    }
+    return buttons;
+  }
+  window['MPC']['getMouseButton'] = getMouseButton;
+
   function getElementsByClassName(className, tag, parent) {
     parent = parent || document;
     if (!(parent = $(parent))) {
