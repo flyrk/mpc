@@ -131,6 +131,19 @@
   }
   window['MPC']['getEventObject'] = getEventObject;
 
+  function getTarget(eventObject) {
+    eventObject = eventObject || getEventObject(eventObject);
+    // W3C或MSIE模型
+    var target = eventObject.target || eventObject.srcElement;
+    // 如果像Safari中一样是一个文本节点
+    // 则重新将目标对象指定为父元素
+    if (target.nodeType === MPC.node.TEXT_NODE) {
+      target = target.parentNode;
+    }
+    return target;
+  }
+  window['MPC']['getTarget'] = getTarget;
+
   function getElementsByClassName(className, tag, parent) {
     parent = parent || document;
     if (!(parent = $(parent))) {
