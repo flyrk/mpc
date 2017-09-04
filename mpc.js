@@ -255,6 +255,58 @@
   }
   window['MPC']['getElementsByClassName'] = getElementsByClassName;
 
+  function getClassNames(element) { // 取得包含元素类名的数组
+    if (!(element = $(element))) {
+      return false;
+    }
+    // 用一个空格替换多个空格，然后基于空格分割类名
+    return element.className.replace(/\s+/, ' ').trim().split(' ');
+  }
+  window['MPC']['getClassNames'] = getClassNames;
+
+  function hasClassName(element, className) { // 检查元素中是否存在某个类
+    if (!(element = $(element))) {
+      return false;
+    }
+    var classes = getClassNames(element);
+    for (var i = 0, len = classes.length; i < len; i++) {
+      if (classes[i] === className) {
+        return true;
+      }
+    }
+    return false;
+  }
+  window['MPC']['hasClassName'] = hasClassName;
+
+  function addClassName(element, className) { // 给元素添加类
+    if (!(element = $(element))) {
+      return false;
+    }
+    // 将类名添加到当前className的末尾
+    // 如果没有className，则不包含空格
+    element.className += (element.className ? ' ' : '') + className;
+    return true;
+  }
+  window['MPC']['addClassName'] = addClassName;
+
+  function removeClassName(element, className) {  // 给元素删除类
+    if (!(element = $(element))) {
+      return false;
+    }
+    var classes = getClassNames(element);
+    var len = classes.length;
+    // 遍历数组删除匹配的classname
+    // 因为数组长度会变化所以反向循环
+    for (var i = len - 1; i >= 0; i--) {
+      if (classes[i] === className) {
+        classes.splice(i, 1);
+      }
+    }
+    element.className = classes.join(' ');
+    return (len === classes.length ? false : true);
+  }
+  window['MPC']['removeClassName'] = removeClassName;
+
   function setStyleById(element, styles) {
     if (!(element = $(element))) {
       return false;
