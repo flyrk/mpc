@@ -208,6 +208,22 @@
   }
   window['MPC']['getMouseButton'] = getMouseButton;
 
+  function getPointerPositionInDocument(eventObject) {
+    eventObject = eventObject || getEventObject(eventObject);
+    // 针对浏览器滚动后的位移属性
+    // W3C使用document.documentElement.scrollTop
+    // IE使用document.body.scrollTop
+    // Safari把位置信息放在了pageX和pageY属性中
+    var x = eventObject.pageX || (eventObject.clientX + 
+        (document.documentElement.scrollLeft || document.body.scrollLeft));
+    
+    var y = eventObject.pageY || (eventObject.clientY +
+        (document.documentElement.scrollTop || document.body.scrollTop));
+    
+    return {'x': x, 'y': y};
+  }
+  window['MPC']['getPointerPositionInDocument'] = getPointerPositionInDocument;
+
   function getElementsByClassName(className, tag, parent) {
     parent = parent || document;
     if (!(parent = $(parent))) {
