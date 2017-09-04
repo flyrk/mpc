@@ -255,6 +255,46 @@
   }
   window['MPC']['getElementsByClassName'] = getElementsByClassName;
 
+  function setStyleById(element, styles) {
+    if (!(element = $(element))) {
+      return false;
+    }
+
+    for (property in styles) {
+      if (!styles.hasOwnProperty(property)) continue;
+      if (element.style.setProperty) {
+        // DOM2样式规范方法
+        element.style.setProperty(uncamelize(property, '-'), styles[property], null);
+      } else {
+        element.style[camelize(property)] = styles[property];
+      }
+    }
+    return true;
+  }
+  window['MPC']['setStyle'] = setStyleById;
+  window['MPC']['setStyleById'] = setStyleById;
+
+  function setStylesByClassName(parent, tag, className, styles) {
+    if (!(parent = $(parent))) {
+      return false;
+    }
+    var elements = getElementsByClassName(className, tag, parent);
+    for (var e = 0, len = elements.length; e < len; e++) {
+      setStyleById(elements[e], styles);
+    }
+    return true;
+  }
+  window['MPC']['setStylesByClassName'] = setStylesByClassName;
+
+  function setStylesByTagName(tagname, styles, parent) {
+    parent = $(parent) || document;
+    var elements = parent.getElementsByTagName(tagname);
+    for (var e = 0, len = elements.length; e < len; e++) {
+      setStyleById(elements[e], styles);
+    }
+  }
+  window['MPC']['setStylesByTagName'] = setStylesByTagName;
+
   function toggleDisplay(node, value) {
     if (!(node = $(node))) {
       return false;
@@ -394,11 +434,18 @@
   window['MPC']['walkTheDOMWithAttributes'] = walkTheDOMWithAttributes;
 
   function camelize(s) { // 把word-word转换为worldWorld
-    return s, replace(/-(\w)/g, function (strMatch, p1) {
+    return s.replace(/-(\w)/g, function (strMatch, p1) {
       return p1.toUpperCase();
     });
   }
   window['MPC']['camelize'] = camelize;
+
+  function uncamelize(s, padding) {
+    return s.replace(/[a-z]([A-Z])/g, function(strMatch, p1) {
+      return '-' + p1.toLowerCase();
+    });
+  }
+  window['MPC']['uncamelize'] = uncamelize;
 
   window['MPC']['node'] = {
     ELEMENT_NODE: 1,
