@@ -20,4 +20,15 @@ MPC.addEvent(window, 'load', function() {
       this.className = 'clicked';
     });
   }
+
+  var object = document.getElementById('follow');
+
+  object.style.position = 'absolute';
+
+  function eventListener(W3CEvent) {
+    var pointer = MPC.getPointerPositionInDocument(W3CEvent);
+    object.style.left = pointer.x + 'px';
+    object.style.right = pointer.y + 'px';
+  }
+  MPC.addEvent(document, 'mousemove', eventListener);
 });
