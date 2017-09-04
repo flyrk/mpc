@@ -224,6 +224,14 @@
   }
   window['MPC']['getPointerPositionInDocument'] = getPointerPositionInDocument;
 
+  function getKeyPressed(eventObject) {
+    eventObject = eventObject || getEventObject(eventObject);
+    var code = eventObject.keyCode;
+    var value = String.fromCharCode(code);
+    return {'code': code, 'value': value};
+  }
+  window['MPC']['getKeyPressed'] = getKeyPressed;
+
   function getElementsByClassName(className, tag, parent) {
     parent = parent || document;
     if (!(parent = $(parent))) {
