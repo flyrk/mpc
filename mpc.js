@@ -103,7 +103,7 @@
     }
     // 对于Safari使用setInterval检测document是否载入完成
     if (/WebKit/i.test(navigator.userAgent)) {
-      var _timer = setInterval(funciton() {
+      var _timer = setInterval(function() {
         if (/loaded|complete/.test(document.readyState)) {
           clearInterval(_timer);
           init();

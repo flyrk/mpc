@@ -35,3 +35,9 @@ ul {
 .clicked {
   background-color: #d3f4a2;
 }
+#follow {
+  width: 100px;
+  height: 100px;
+  border-radius: 20px;
+  background-color: #d3f4a2;
+}
